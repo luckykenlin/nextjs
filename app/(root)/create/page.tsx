@@ -23,7 +23,7 @@ export default function Page() {
     const route = useRouter();
     const form = useForm<CreatePostInputType>({resolver: zodResolver(CreatePostSchema)});
 
-    const {mutate, error, isLoading, data} = useAction(createPost, {
+    const {mutate, error, isPending, data} = useAction(createPost, {
         onSuccess: (data) => {
             route.back();
         },
@@ -83,7 +83,7 @@ export default function Page() {
                         <DialogFooter>
                             <Button
                                 type="submit"
-                                disabled={form.formState.isSubmitting || isLoading}
+                                disabled={form.formState.isSubmitting || isPending}
                             >
                                 Save changes {form.formState.isSubmitting && '...'}
                             </Button>

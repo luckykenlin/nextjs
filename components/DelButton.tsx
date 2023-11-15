@@ -5,15 +5,15 @@ import {deletePost} from "@/lib/post";
 import {useAction} from "@/hooks/useAction";
 
 export default function DelButton({id}: { id: number }) {
-    const {isLoading, mutate} = useAction(deletePost);
+    const {isPending, mutate} = useAction(deletePost);
 
     return (
         <Button
             onClick={() => mutate(id)}
             variant={'destructive'}
-            disabled={isLoading}
+            disabled={isPending}
         >
-            {isLoading ? 'Deleting...' : 'Delete'}
+            {isPending ? 'Deleting...' : 'Delete'}
         </Button>
     )
 };

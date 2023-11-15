@@ -56,9 +56,6 @@ export default async function RootLayout({
 
                                     <CardFooter className={'space-x-4'}>
                                         <DelButton id={post.id}/>
-                                        <Button asChild variant={'outline'}>
-                                            <Link href={'edit/' + post.id}>Edit</Link>
-                                        </Button>
                                     </CardFooter>
                                 </Card>
                             )

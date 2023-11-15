@@ -19,11 +19,16 @@ export const useAction = <TInput, TOutput, TError>(
 ) => {
     const [error, setError] = useState<TError | undefined>();
     const [data, setData] = useState<TOutput | undefined>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isPending, setIsPend] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
     const mutate = useCallback(
         async (input: TInput) => {
-            setIsLoading(true);
+            setIsPend(true);
+            setIsError(false);
+            setError(undefined);
+            setIsSuccess(false);
 
             try {
                 const result = await action(input);
@@ -35,26 +40,44 @@ export const useAction = <TInput, TOutput, TError>(
                 if (result.error) {
                     setError(result.error);
                     setData(undefined);
+                    setIsError(true);
+                    setIsSuccess(false);
                     options.onError?.(result.error);
                 }
 
                 if (result.data) {
                     setError(undefined);
                     setData(result.data);
+                    setIsError(false);
+                    setIsSuccess(true);
                     options.onSuccess?.(result.data);
                 }
             } finally {
-                setIsLoading(false);
+                setIsPend(false);
                 options.onComplete?.();
             }
         },
         [action, options]
     );
 
+    const reset = useCallback(
+        () => {
+            setIsSuccess(false);
+            setIsError(false);
+            setIsPend(false);
+            setError(undefined);
+            setData(undefined);
+        }, []
+    );
+
     return {
+        reset,
         mutate,
+        mutateAsync: action,
         error,
         data,
-        isLoading,
+        isPending,
+        isSuccess,
+        isError
     };
 };
