@@ -13,4 +13,4 @@ export const CreatePostSchema = z.object({
 });
 
 export type CreatePostInputType = z.infer<typeof CreatePostSchema>;
-export type CreatePostReturnType = ActionState<Boolean, any>;
+export type CreatePostReturnType = ActionState<Boolean>;

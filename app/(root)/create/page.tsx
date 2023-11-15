@@ -25,7 +25,6 @@ export default function Page() {
 
     const {mutate, error, isLoading, data} = useAction(createPost, {
         onSuccess: (data) => {
-            console.log("success callback", data);
             route.back();
         },
         onError: (error) => {
@@ -44,7 +43,9 @@ export default function Page() {
         >
             <DialogContent className="sm:max-w-xl">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(mutate)}>
+                    <form onSubmit={form.handleSubmit((data) => {
+                        mutate(data);
+                    })}>
                         <DialogHeader>
                             <DialogTitle>Create Post</DialogTitle>
                             <DialogDescription>

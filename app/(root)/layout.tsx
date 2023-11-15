@@ -8,8 +8,8 @@ import {getPosts} from "@/lib/post";
 import DelButton from "@/components/DelButton";
 import Providers from "@/components/Providers";
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 import LogoutButton from "@/components/LogoutButton";
+import {authOptions} from "@/app/api/auth/[...nextauth]/_auth-options";
 
 const inter = Inter({subsets: ['latin']})
 

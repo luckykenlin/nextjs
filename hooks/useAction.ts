@@ -34,10 +34,12 @@ export const useAction = <TInput, TOutput, TError>(
 
                 if (result.error) {
                     setError(result.error);
+                    setData(undefined);
                     options.onError?.(result.error);
                 }
 
                 if (result.data) {
+                    setError(undefined);
                     setData(result.data);
                     options.onSuccess?.(result.data);
                 }
